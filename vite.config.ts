@@ -1,16 +1,19 @@
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  tanstackStart: {
-    // Forzamos a TanStack a compilar en modo Single Page Application (sin servidor)
-    app: {
-      ssr: false
-    }
+  plugins: [
+    tsconfigPaths(),
+    TanStackRouterVite({
+      target: "react",
+      routesDirectory: "./src/routes",
+      generatedRouteTree: "./src/routeTree.gen.ts",
+    }),
+    react(),
+  ],
+  build: {
+    outDir: "dist",
   },
-  vite: {
-    build: {
-      // Nos aseguramos de que el destino final sea la carpeta dist estándar
-      outDir: "dist",
-    }
-  }
 });
