@@ -2,13 +2,15 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
-    server: { 
-      entry: "server",
-      preset: "vercel" // <- Añadido directamente aquí dentro
-    },
+    // Forzamos a TanStack a compilar en modo Single Page Application (sin servidor)
+    app: {
+      ssr: false
+    }
   },
-  // Puedes dejar o quitar el objeto nitro de abajo, pero el importante es el de arriba
-  nitro: {
-    preset: "vercel",
-  },
+  vite: {
+    build: {
+      // Nos aseguramos de que el destino final sea la carpeta dist estándar
+      outDir: "dist",
+    }
+  }
 });
